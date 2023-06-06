@@ -1,20 +1,17 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from jinja2 import Environment, PackageLoader, select_autoescape
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'upload'
 
 @app.route('/', methods=['GET'])
 def hello_world():
    username = request.args.get("name")
-   if username == None:
-      htmlFile = open('loginPage.html', 'r')
-      content = htmlFile.read()
-      htmlFile.close()
-      return content
-   helloPage = open('webPage.html', 'r')
-   content = helloPage.read()
-   environment = Environment()
-   template = environment.from_string(content)
-   return template.render(name=username)
+   return render_template('webPage.html', name=username)
+
+@app.route('/newyork.jpg')
+def bg_img ():
+   img_file = open('upload/newyork.jpg', 'rb')
+   return img_file.read()
 
 if __name__ == '__main__':
    app.run()
