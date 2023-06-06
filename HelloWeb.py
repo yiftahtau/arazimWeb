@@ -3,7 +3,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-   return 'Hello World'
+   htmlFile = open('webPage.html', 'r')
+   content = htmlFile.read()
+   htmlFile.close()
+   return content
 
 if __name__ == '__main__':
    app.run()
